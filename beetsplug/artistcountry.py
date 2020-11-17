@@ -10,7 +10,7 @@ def memoize_artist(f):
     cache = {}
 
     def memf(item):
-        artist_id = item['mb_artistid']
+        artist_id = item['mb_albumartistid']
         if artist_id not in cache:
             cache[artist_id] = f(item)
         return cache[artist_id]
@@ -21,11 +21,11 @@ def memoize_artist(f):
 @CountryPlugin.template_field('artist_country')
 @memoize_artist
 def _tmpl_country(item):
-    if len(item['mb_artistid']) == 0:
-        print("No mb_artistid for %s" % item['artist'])
+    if len(item['mb_albumartistid']) == 0:
+        print("No mb_albumartistid for %s" % item['albumartist'])
         return ''
     
-    artist_item = get_artist_by_id(item['mb_artistid'])
+    artist_item = get_artist_by_id(item['mb_albumartistid'])
     artist = artist_item['artist']
     country = artist.get('country', '')
     if not country:
