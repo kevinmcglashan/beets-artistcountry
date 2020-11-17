@@ -21,6 +21,10 @@ def memoize_artist(f):
 @CountryPlugin.template_field('artist_country')
 @memoize_artist
 def _tmpl_country(item):
+    if len(item['mb_artistid']) == 0:
+        print("No mb_artistid for %s" % item['artist'])
+        return ''
+    
     artist_item = get_artist_by_id(item['mb_artistid'])
     artist = artist_item['artist']
     country = artist.get('country', '')
